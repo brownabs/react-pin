@@ -2,12 +2,18 @@ import React from 'react';
 import { getBoardPins, getPin } from '../helpers/data/pinData';
 import { getSingleBoard } from '../helpers/data/boardData';
 import PinsCard from '../components/Cards/PinsCard';
+import BoardForm from '../components/Forms/BoardForm';
+import PinForm from '../components/Forms/PinForm';
+import AppModal from '../components/AppModal';
 
 export default class SingleBoard extends React.Component {
   state = {
     board: {},
     pins: [],
   };
+
+  //   SingleBoards.js file:
+  // { Object.keys(board).length && <BoardForm board={board} onUpdate={this.getBoardInfo} />} (
 
   componentDidMount() {
     // 1. Pull boardId from URL params
@@ -52,6 +58,14 @@ export default class SingleBoard extends React.Component {
     // 5. Render the pins on the DOM
     return (
       <div>
+        {/* makes sure that boards has been rendered */}
+        <AppModal title={'Update Board'} buttonLabel={'Update Board'}>
+        { Object.keys(board).length && <BoardForm board={board} onUpdate={getSingleBoard} />}
+        </AppModal>
+        {/* makes sure that boards has been rendered */}
+        <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
+          {<PinForm board={board}/>}
+        </AppModal>
         <h1>{board.name}</h1>
         <div className='d-flex flex-wrap container'>
           {renderPins()}

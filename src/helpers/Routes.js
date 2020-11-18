@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from '../views/Home';
-import BoardForm from '../views/BoardForm';
 import Boards from '../views/Boards';
 import PinDetails from '../views/PinDetails';
 import PinForm from '../views/PinForm';
@@ -42,11 +41,6 @@ export default function Routes({ user }) {
           exact
           path='/search/:term/:type'
           component={(props) => <SearchResults {...props} />}
-        />
-        <Route
-          exact
-          path='/board-form'
-          component={() => <BoardForm user={user} />}
         />
         <Route
           exact

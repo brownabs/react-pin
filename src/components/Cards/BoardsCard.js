@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 export default function BoardsCard({ board }) {
   return (
-    <div className='card m-2'>
-      <img className='card-img-top' src={board.imageUrl} alt='Card cap' />
+    <div className='card m-2 w-50'>
+      <img className='card-img-top' src={board.imgUrl} alt='Card cap' />
       <div className='card-body'>
         <h5 className='card-title'>{board.name}</h5>
         <p className='card-text'>

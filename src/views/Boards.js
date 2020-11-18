@@ -3,6 +3,8 @@ import { getAllUserBoards } from '../helpers/data/boardData';
 import BoardsCard from '../components/Cards/BoardsCard';
 import Loader from '../components/Loader';
 import getUid from '../helpers/data/authData';
+import BoardForm from '../components/Forms/BoardForm';
+import AppModal from '../components/AppModal';
 
 export default class Boards extends React.Component {
   state = {
@@ -11,6 +13,10 @@ export default class Boards extends React.Component {
   }
 
   componentDidMount() {
+    this.getBoards();
+  }
+
+  getBoards = () => {
     const currentUserId = getUid();
     getAllUserBoards(currentUserId).then((response) => {
       this.setState({
@@ -36,11 +42,13 @@ export default class Boards extends React.Component {
     );
     return (
       <>
+      <AppModal title={'Create Board'} buttonLabel={'Create Board'}>
+      <BoardForm onUpdate={this.getBoards}/>
+        </AppModal>
         { loading ? (
           <Loader />
         ) : (
           <>
-          <h2>Here are all of your boards</h2>
           <div className='d-flex flex-wrap container'>{showBoards()}</div>
           </>
         )}
