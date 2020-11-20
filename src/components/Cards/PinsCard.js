@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AppModal from '../AppModal';
+import PinForm from '../Forms/PinForm';
 
 export default function PinsCard({ pin, className }) {
   return (
@@ -12,9 +14,9 @@ export default function PinsCard({ pin, className }) {
         </p>
         {(className) ? <Link className='btn btn-primary' to={`/pin-details/${pin.firebaseKey}`}>
           View Pin Details
-        </Link> : <Link className='btn btn-primary' to={`/pin-edit/${pin.firebaseKey}`}>
-          Edit Pin
-        </Link>}
+        </Link> : <AppModal title={'Edit Pin'} buttonLabel={'Edit Pin'}>
+      <PinForm pin={pin}/>
+        </AppModal>}
       </div>
     </div>
   );
