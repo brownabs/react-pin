@@ -6,12 +6,12 @@ import { CreatePin, UpdatePin } from '../../helpers/data/pinData';
 
 export default class PinForm extends Component {
   state = {
-    firebaseKey: '',
-    name: '',
-    description: '',
-    imgUrl: '',
+    firebaseKey: this.props.pin?.firebaseKey || '',
+    name: this.props.pin?.name || '',
+    description: this.props.pin?.description || '',
+    imgUrl: this.props.pin?.imgUrl || '',
     userId: '',
-    private: '',
+    private: false,
     boardId: this.props.board?.firebaseKey || '',
   }
 
@@ -92,6 +92,10 @@ export default class PinForm extends Component {
       onChange={this.handleChange}
       accept='image/*'
       ></input>
+        <select name='private' value={this.state.private} onChange={this.handleChange} >
+          <option value='true'>Private Pin</option>
+          <option value='false'>Public Pin</option>
+        </select>
       <button>Submit</button>
       </form>
     );
