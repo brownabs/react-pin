@@ -29,7 +29,9 @@ export default class SingleBoard extends React.Component {
     this.getPins(boardId)
       // because we did a promise.all, the response will not resolve until all the promises are completed
       .then((resp) => (
-        this.setState({ pins: resp })
+        this.setState({
+          pins: resp,
+        })
       ));
   }
 
@@ -49,11 +51,11 @@ export default class SingleBoard extends React.Component {
   render() {
     const { pins, board } = this.state;
     const renderPins = () => (
-      // 4. map over the pins in state
       pins.map((pin) => (
-         <PinsCard key={pin.firebaseKey} pin={pin} />
+        <PinsCard key={pin.firebaseKey} pin={pin} />
       ))
     );
+      // 4. map over the pins in state
 
     // 5. Render the pins on the DOM
     return (
@@ -64,11 +66,11 @@ export default class SingleBoard extends React.Component {
         </AppModal>
         {/* makes sure that boards has been rendered */}
         <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
-          {<PinForm board={board}/>}
+          {<PinForm board={board} onUpdate={getSingleBoard}/>}
         </AppModal>
         <h1>{board.name}</h1>
         <div className='d-flex flex-wrap container'>
-          {renderPins()}
+          { renderPins() }
         </div>
       </div>
     );
