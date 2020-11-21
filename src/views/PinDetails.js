@@ -33,22 +33,13 @@ export default class PinDetails extends React.Component {
   render() {
     const { pin } = this.state;
     const showPin = () => (
-    <PinsCard key={pin.firebaseKey} pin={pin} />
+    <PinsCard key={pin.firebaseKey} pin={pin} onUpdate={this.getSelectedPin}/>
     );
     return (
       <>
+      <div className="d-flex flex-column justify-content-center">
       <div className='d-flex flex-wrap container'>{showPin()}</div>
-
-      {/* <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
-      <PinForm onUpdate={this.getPins}/>
-        </AppModal>
-        { loading ? (
-          <Loader />
-        ) : (
-          <>
-          <div className='d-flex flex-wrap container'>{showPins()}</div>
-          </>
-        )} */}
+      </div>
       </>
     );
   }
