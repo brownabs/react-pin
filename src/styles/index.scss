@@ -8,3 +8,12 @@
 body {
   background-color: $favColor;
 }
+
+.card {
+  min-height: 100px !important
+}
+
+.boardImg {
+  width: 70px;
+  border-radius: 50px;
+}

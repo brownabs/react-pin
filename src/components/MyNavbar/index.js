@@ -44,7 +44,7 @@ export default function MyNavbar(props) {
           {
             user
             && <>
-              <img className="userInfo" src={user?.photoURL} alt={user?.displayName} />
+              <img className="userInfo ml-5" src={user?.photoURL} alt={user?.displayName} />
               <UncontrolledDropdown>
               <DropdownToggle nav caret>
               </DropdownToggle>

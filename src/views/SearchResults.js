@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BoardsCard from '../components/Cards/BoardsCard';
 import PinsCard from '../components/Cards/PinsCard';
+// import SearchBoards from '../helpers/data/boardData';
 
 export default class SearchResults extends Component {
   state={
@@ -9,34 +10,38 @@ export default class SearchResults extends Component {
     searchType: '',
   }
 
-  componentDidMount() {
-    this.performSearch();
-  }
+  // componentDidMount() {
+  //   this.performSearch();
+  // }
 
-  performSearch = () => {
-    const searchTerm = this.props.match.params.term;
-    const searchType = this.props.match.params.type;
+  // performSearch = () => {
+  //   const searchTerm = this.props.match.params.term;
+  //   const searchType = this.props.match.params.type;
 
-    if (searchType === 'boards') {
-      // api calls that gets boards with search term .filter()
-      this.setState({
-        // api results will update results in state
-        searchTerm,
-        searchType,
-      });
-    } else {
-      this.setState({
-        searchTerm,
-        searchType,
-      });
-    }
-  }
+  //   if (searchType === 'boards') {
+  //     // api calls that gets boards with search term .filter()
+  //     SearchBoards()
+  //       .then((response) => {
+  //         console.warn(response);
+  //       });
+  //     this.setState({
+  //       // api results will update results in state
+  //       searchTerm,
+  //       searchType,
+  //     });
+  //   } else {
+  //     this.setState({
+  //       searchTerm,
+  //       searchType,
+  //     });
+  //   }
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchTerm !== this.props.match.params.term) {
-      this.performSearch();
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.searchTerm !== this.props.match.params.term) {
+  //     this.performSearch();
+  //   }
+  // }
 
   render() {
     const { results, searchType } = this.state;

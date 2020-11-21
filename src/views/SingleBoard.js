@@ -10,10 +10,8 @@ export default class SingleBoard extends React.Component {
   state = {
     board: {},
     pins: [],
+    loading: true,
   };
-
-  //   SingleBoards.js file:
-  // { Object.keys(board).length && <BoardForm board={board} onUpdate={this.getBoardInfo} />} (
 
   componentDidMount() {
     // 1. Pull boardId from URL params
@@ -35,6 +33,16 @@ export default class SingleBoard extends React.Component {
       ));
   }
 
+  setLoading = () => {
+    this.timer = setInterval(() => {
+      this.setState({ loading: false });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   getPins = (boardId) => (
     getBoardPins(boardId).then((response) => {
       // an array that holds all of the calls to get the pin information
@@ -49,7 +57,7 @@ export default class SingleBoard extends React.Component {
   )
 
   render() {
-    const { pins, board } = this.state;
+    const { pins, board, loading } = this.state;
     const renderPins = () => (
       pins.map((pin) => (
         <PinsCard key={pin.firebaseKey} pin={pin} />
@@ -59,7 +67,9 @@ export default class SingleBoard extends React.Component {
 
     // 5. Render the pins on the DOM
     return (
-      <div>
+      <div className='d-flex flex-column justify-content-center'>
+        <h1 classNam='m-3'> <img className='boardImg mr-2' src={board.imgUrl} alt='Card cap' />{board.name} </h1>
+        <div className='d-flex flex-row justify-content-center'>
         {/* makes sure that boards has been rendered */}
         <AppModal title={'Update Board'} buttonLabel={'Update Board'}>
         { Object.keys(board).length && <BoardForm board={board} onUpdate={getSingleBoard} />}
@@ -68,9 +78,9 @@ export default class SingleBoard extends React.Component {
         <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
           {<PinForm board={board} onUpdate={getSingleBoard}/>}
         </AppModal>
-        <h1>{board.name}</h1>
-        <div className='d-flex flex-wrap container'>
-          { renderPins() }
+        </div>
+        <div className='d-flex justify-content-center flex-wrap container'>
+          {pins.length ? renderPins() : <h1>There are currently no pins for this board</h1> }
         </div>
       </div>
     );
