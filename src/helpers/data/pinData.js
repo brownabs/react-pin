@@ -20,21 +20,17 @@ const getBoardPins = (boardId) => new Promise((resolve, reject) => {
   }).catch((error) => reject(error));
 });
 
-const CreatePinBoard = (dataResponse, pinObj) => new Promise((resolve, reject) => {
-  console.warn(dataResponse, pinObj);
+const CreatePinBoard = (pinObj) => new Promise((resolve, reject) => {
   const pinBoard = {
     boardId: pinObj.boardId,
-    pinId: dataResponse.firebaseKey,
+    pinId: pinObj.pinId,
     userId: pinObj.userId,
   };
   axios.post(`${baseUrl}/pins-boards.json`, pinBoard)
     .then((response) => {
       const update = { firebaseKey: response.data.name };
       axios.patch(`${baseUrl}/pins-boards/${response.data.name}.json`, update)
-        .then((resp) => {
-          console.warn(resp.data);
-        });
-      resolve(response);
+        .then((resolve));
     }).catch((error) => reject(error));
 });
 
@@ -44,21 +40,21 @@ const getPin = (pinId) => new Promise((resolve, reject) => {
   }).catch((error) => reject(error));
 });
 
-const CreatePin = (pinObj) => new Promise((resolve, reject) => {
-  console.warn(pinObj);
-  axios.post(`${baseUrl}/pins.json`, pinObj)
+const CreatePin = (object) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/pins.json`, object)
     .then((response) => {
-      const update = { firebaseKey: response.data.name };
-      axios.patch(`${baseUrl}/pins/${response.data.name}.json`, update)
-        .then((resp) => {
-          CreatePinBoard(resp.data, pinObj);
-        });
-      resolve(response.data);
+      axios.patch(`${baseUrl}/pins/${response.data.name}.json`, { firebaseKey: response.data.name }).then(resolve);
     }).catch((error) => reject(error));
 });
 
 const UpdatePin = (pinObj) => axios.patch(`${baseUrl}/pins/${pinObj.firebaseKey}.json`, pinObj);
 
+const DeletePin = (pinId) => axios.delete(`${baseUrl}/pins/${pinId}.json`);
+
+const DeleteBoardPin = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.delete(`${baseUrl}/pins-boards/${firebaseKey}.json`).then((resolve)).catch((error) => reject(error));
+});
+
 export {
-  getBoardPins, getPin, CreatePin, UpdatePin, getAllUserPins, getSinglePin,
+  getBoardPins, getPin, CreatePin, UpdatePin, getAllUserPins, getSinglePin, DeletePin, CreatePinBoard, DeleteBoardPin,
 };

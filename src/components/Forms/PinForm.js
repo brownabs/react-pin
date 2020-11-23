@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/storage';
 import GetUser from '../../helpers/data/authData';
-import { CreatePin, getSinglePin, UpdatePin } from '../../helpers/data/pinData';
+import { CreatePin, UpdatePin, CreatePinBoard } from '../../helpers/data/pinData';
 
 export default class PinForm extends Component {
   state = {
@@ -43,13 +43,22 @@ export default class PinForm extends Component {
     e.preventDefault();
     if (this.state.firebaseKey === '') {
       CreatePin(this.state)
-        .then((response) => {
-          getSinglePin(response.data);
+        .then((resp) => {
+          const pinBoardInfo = {
+            pinId: resp.data.firebaseKey,
+            boardId: this.state.boardId,
+            userId: this.state.userId,
+          };
+          return pinBoardInfo;
+        }).then((pinBoardInfo) => CreatePinBoard(pinBoardInfo))
+        .then((r) => {
+          console.warn(r);
+          this.props.onUpdate(this.state.boardId);
         });
     } else {
       UpdatePin(this.state)
         .then((response) => {
-          getSinglePin(this.state.firebaseKey);
+          this.props.onUpdate(response.data.boardId);
         });
     }
   }
