@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
+import AppModal from '../AppModal';
 
 export default function BoardsCard({ board }) {
   return (
@@ -13,6 +15,10 @@ export default function BoardsCard({ board }) {
         <Link className='btn btn-primary' to={`/boards/${board.firebaseKey}`}>
           View Pins
         </Link>
+        <AppModal title={'Edit Pin'} buttonLabel={'Edit Pin'}>
+        <Button className="ml-1"><i className="fas fa-trash"></i></Button>
+        </AppModal>
+        <Button className="ml-1"><i className="fas fa-trash"></i></Button>
       </div>
     </div>
   );

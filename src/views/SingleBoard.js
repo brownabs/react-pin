@@ -1,5 +1,7 @@
 import React from 'react';
-import { getBoardPins, getPin } from '../helpers/data/pinData';
+import {
+  getBoardPins, getPin, DeletePin, DeleteBoardPin,
+} from '../helpers/data/pinData';
 import { getSingleBoard } from '../helpers/data/boardData';
 import PinsCard from '../components/Cards/PinsCard';
 import BoardForm from '../components/Forms/BoardForm';
@@ -14,6 +16,10 @@ export default class SingleBoard extends React.Component {
   };
 
   componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = () => {
     // 1. Pull boardId from URL params
     const boardId = this.props.match.params.id;
     // 2. Make a call to the API that gets the board info
@@ -56,27 +62,40 @@ export default class SingleBoard extends React.Component {
     })
   )
 
+  removePin = (e) => {
+    const firebaseKey = e.target.id;
+    DeletePin(firebaseKey);
+    getBoardPins(this.state.board.firebaseKey).then((response) => {
+      response.forEach((item) => {
+        const newArray = Object.values(item);
+        if (newArray.includes(firebaseKey)) {
+          console.warn(item.firebaseKey);
+          DeleteBoardPin(item.firebaseKey)
+            .then(() => {
+              this.loadData();
+            });
+        }
+      });
+    });
+  }
+
   render() {
     const { pins, board, loading } = this.state;
+    console.warn(pins);
     const renderPins = () => (
       pins.map((pin) => (
-        <PinsCard key={pin.firebaseKey} pin={pin} />
+        <PinsCard key={pin.firebaseKey} pin={pin} removePin={this.removePin}/>
       ))
     );
-      // 4. map over the pins in state
-
-    // 5. Render the pins on the DOM
     return (
       <div className='d-flex flex-column justify-content-center'>
-        <h1 classNam='m-3'> <img className='boardImg mr-2' src={board.imgUrl} alt='Card cap' />{board.name} </h1>
+        <h1 className='m-3'> <img className='boardImg mr-2' src={board.imgUrl} alt='Card cap' />{board.name} </h1>
         <div className='d-flex flex-row justify-content-center'>
-        {/* makes sure that boards has been rendered */}
         <AppModal title={'Update Board'} buttonLabel={'Update Board'}>
-        { Object.keys(board).length && <BoardForm board={board} onUpdate={getSingleBoard} />}
+        { Object.keys(board).length && <BoardForm board={board} onUpdate={this.loadData} />}
         </AppModal>
-        {/* makes sure that boards has been rendered */}
         <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
-          {<PinForm board={board} onUpdate={getSingleBoard}/>}
+          {<PinForm board={board} onUpdate={this.loadData}/>}
         </AppModal>
         </div>
         <div className='d-flex justify-content-center flex-wrap container'>
