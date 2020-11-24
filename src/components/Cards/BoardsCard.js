@@ -15,7 +15,7 @@ export default function BoardsCard({ board }) {
         <Link className='btn btn-primary' to={`/boards/${board.firebaseKey}`}>
           View Pins
         </Link>
-        <AppModal title={'Edit Pin'} buttonLabel={'Edit Pin'}>
+        <AppModal title={'Are you sure you want to delete this board?'} buttonLabel={'Delete Board'}>
         <Button className="ml-1"><i className="fas fa-trash"></i></Button>
         </AppModal>
         <Button className="ml-1"><i className="fas fa-trash"></i></Button>
