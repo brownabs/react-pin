@@ -62,14 +62,12 @@ export default class SingleBoard extends React.Component {
     })
   )
 
-  removePin = (e) => {
-    const firebaseKey = e.target.id;
+  removePin = (firebaseKey) => {
     DeletePin(firebaseKey);
     getBoardPins(this.state.board.firebaseKey).then((response) => {
       response.forEach((item) => {
         const newArray = Object.values(item);
         if (newArray.includes(firebaseKey)) {
-          console.warn(item.firebaseKey);
           DeleteBoardPin(item.firebaseKey)
             .then(() => {
               this.loadData();
@@ -80,20 +78,19 @@ export default class SingleBoard extends React.Component {
   }
 
   render() {
-    const { pins, board, loading } = this.state;
-    console.warn(pins);
+    const { pins, board } = this.state;
     const renderPins = () => (
       pins.map((pin) => (
-        <PinsCard key={pin.firebaseKey} pin={pin} removePin={this.removePin}/>
+        <PinsCard key={pin.firebaseKey} pin={pin} removePin={this.removePin} route={`boards/${pin.boardId}`}/>
       ))
     );
     return (
       <div className='d-flex flex-column justify-content-center'>
         <h1 className='m-3'> <img className='boardImg mr-2' src={board.imgUrl} alt='Card cap' />{board.name} </h1>
         <div className='d-flex flex-row justify-content-center'>
-        <AppModal title={'Update Board'} buttonLabel={'Update Board'}>
-        { Object.keys(board).length && <BoardForm board={board} onUpdate={this.loadData} />}
-        </AppModal>
+    {!this.state.hideModal ? <AppModal title={'Update Board'} buttonLabel={'Update Board'}>
+    { Object.keys(board).length && <BoardForm board={board} onUpdate={this.loadData} {...this.props} /> }
+    </AppModal> : ''}
         <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
           {<PinForm board={board} onUpdate={this.loadData}/>}
         </AppModal>
