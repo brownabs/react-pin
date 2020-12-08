@@ -14,6 +14,7 @@ import {
   DropdownItem,
 } from 'reactstrap';
 import SearchInput from '../SearchInput';
+import img from './pinterestLogo.png';
 
 export default function MyNavbar(props) {
   const logMeOut = (e) => {
@@ -25,8 +26,9 @@ export default function MyNavbar(props) {
   const toggle = () => setIsOpen(!isOpen);
   return (
     <div>
-      <Navbar color='dark' dark expand='md' className='justify-content-between'>
-        <Link className="navbar-brand" to='/'>Pinterest</Link>
+      <Navbar color='white' dark expand='md' fixed="top" className='justify-content-between'>
+        <Link className="navbar-brand" to='/'><img src={img} alt='brand' width="35"
+        height="35"></img></Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className='mr-auto' navbar>
@@ -54,7 +56,7 @@ export default function MyNavbar(props) {
                 </DropdownItem>
                 <DropdownItem>
                   <div
-                    className='nav-link btn btn-danger'
+                    className='nav-link btn'
                     onClick={(e) => logMeOut(e)}
                   >
                     Logout

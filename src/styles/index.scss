@@ -17,3 +17,24 @@ body {
   width: 70px;
   border-radius: 50px;
 }
+
+.search-input {
+  width: 800px !important;
+  margin-top: 5px;
+  border-radius: 10px;
+  background-color: rgb(233, 232, 232);
+  border: none;
+}
+
+.search-select {
+  border-radius: 10px;
+  border: none
+}
+
+.nav-link {
+  color: black !important
+}
+
+.boards {
+  width: 100% !important
+}
