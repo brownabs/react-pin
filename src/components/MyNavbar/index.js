@@ -25,8 +25,8 @@ export default function MyNavbar(props) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   return (
-    <div>
-      <Navbar color='white' dark expand='md' fixed="top" className='justify-content-between'>
+    <div className='navbar-collection'>
+      <Navbar color='white' dark expand='md' fixed="top" className='navbar justify-content-between'>
         <Link className="navbar-brand" to='/'><img src={img} alt='brand' width="35"
         height="35"></img></Link>
         <NavbarToggler onClick={toggle} />

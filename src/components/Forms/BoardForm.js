@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/storage';
+import { Button } from 'reactstrap';
 import GetUser from '../../helpers/data/authData';
 import { CreateBoard, UpdateBoard } from '../../helpers/data/boardData';
 
@@ -44,11 +45,13 @@ export default class BoardForm extends Component {
         .then(() => {
           this.props.onUpdate();
         });
+      this.props.toggle();
     } else {
       UpdateBoard(this.state)
         .then(() => {
           this.props.onUpdate(this.state.firebaseKey);
         });
+      this.props.toggle();
     }
   }
 
@@ -90,7 +93,7 @@ export default class BoardForm extends Component {
       onChange={this.handleChange}
       accept='image/*'
       ></input>
-      <button>Submit</button>
+      <Button onClick={this.handleSubmit}>Save</Button>
       </form>
     );
   }

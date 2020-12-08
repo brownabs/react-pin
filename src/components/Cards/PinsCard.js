@@ -20,6 +20,11 @@ export default class PinCard extends Component {
     this.props.history.goBack();
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.toggle();
+  }
+
   render() {
     const { pin, detailsPage } = this.state;
     return (
