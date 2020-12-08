@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
+import { Button } from 'reactstrap';
 import 'firebase/storage';
 import GetUser from '../../helpers/data/authData';
 import { CreatePin, UpdatePin, CreatePinBoard } from '../../helpers/data/pinData';
@@ -54,11 +55,13 @@ export default class PinForm extends Component {
         .then((r) => {
           this.props.onUpdate();
         });
+      this.props.toggle();
     } else {
       UpdatePin(this.state)
         .then((response) => {
           this.props.onUpdate(this.state.boardId);
         });
+      this.props.toggle();
     }
   }
 
@@ -104,8 +107,8 @@ export default class PinForm extends Component {
           <option value='true'>Private Pin</option>
           <option value='false'>Public Pin</option>
         </select>
-      <button>Submit</button>
-      </form>
+        <Button onClick={this.handleSubmit}>Save</Button>
+        </form>
     );
   }
 }

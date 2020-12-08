@@ -19,7 +19,7 @@ const AppModal = (props) => {
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
         <ModalBody>
-          {props.children}
+        {props.children ? React.cloneElement(props.children, { toggle }) : props.children}
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>Cancel</Button>

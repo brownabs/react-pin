@@ -16,7 +16,9 @@ export default function BoardsCard({ board }) {
           View Pins
         </Link>
         <AppModal title={'Edit Pin'} buttonLabel={'Edit Pin'}>
-        <Button className="ml-1"><i className="fas fa-trash"></i></Button>
+        </AppModal>
+        <AppModal title={'Are you sure you want to delete this pin?'} buttonLabel={'Delete Pin'}>
+          <Button onClick={() => this.props.removeBoard()}>Yes</Button>
         </AppModal>
         <Button className="ml-1"><i className="fas fa-trash"></i></Button>
       </div>
