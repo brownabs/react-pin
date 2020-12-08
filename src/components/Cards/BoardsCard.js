@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import AppModal from '../AppModal';
+import BoardForm from '../Forms/BoardForm';
 
-export default function BoardsCard({ board }) {
+export default function BoardsCard({ board, removeBoard, onUpdate }) {
   return (
     <div className='card m-2 h-50 w-25'>
       <img className='card-img-top' src={board.imgUrl} alt='Card cap' />
@@ -15,12 +16,10 @@ export default function BoardsCard({ board }) {
         <Link className='btn btn-primary' to={`/boards/${board.firebaseKey}`}>
           View Pins
         </Link>
-        <AppModal title={'Edit Pin'} buttonLabel={'Edit Pin'}>
+        <AppModal title={'Edit Board'} buttonLabel={'Edit Board'}>
+      <BoardForm board={board} onUpdate={onUpdate}/>
         </AppModal>
-        <AppModal title={'Are you sure you want to delete this pin?'} buttonLabel={'Delete Pin'}>
-          <Button onClick={() => this.props.removeBoard()}>Yes</Button>
-        </AppModal>
-        <Button className="ml-1"><i className="fas fa-trash"></i></Button>
+        <Button id={board.firebaseKey} onClick={(e) => removeBoard(e)}><i className="fas fa-trash"></i></Button>
       </div>
     </div>
   );

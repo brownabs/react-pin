@@ -34,16 +34,19 @@ export default class Boards extends React.Component {
 
   removeBoard = (e) => {
     const firebaseKey = e.target.id;
-    DeleteBoard(firebaseKey);
-    getBoardPins(firebaseKey).then((response) => {
-      response.forEach((item) => {
-        const newArray = Object.values(item);
-        if (newArray.includes(firebaseKey)) {
-          DeleteBoardPin(item.firebaseKey)
-            .then(() => {
-              this.getBoards();
-            });
-        }
+    DeleteBoard(firebaseKey).then(() => {
+      getBoardPins(firebaseKey).then((response) => {
+        response.forEach((item) => {
+          const newArray = Object.values(item);
+          if (newArray.includes(firebaseKey)) {
+            DeleteBoardPin(item.firebaseKey)
+              .then(() => {
+                this.getBoards();
+              });
+          }
+        });
+      }).then(() => {
+        this.getBoards();
       });
     });
   }
@@ -55,7 +58,7 @@ export default class Boards extends React.Component {
   render() {
     const { boards, loading } = this.state;
     const showBoards = () => (
-      boards.map((board) => <BoardsCard key={board.firebaseKey} board={board} removeBoard={this.removeBoard}/>)
+      boards.map((board) => <BoardsCard key={board.firebaseKey} board={board} removeBoard={this.removeBoard} onUpdate={this.getBoards}/>)
     );
     return (
       <>
