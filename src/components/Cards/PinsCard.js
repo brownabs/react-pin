@@ -15,6 +15,7 @@ export default class PinCard extends Component {
     this.setState({
       pin: this.props.pin,
     });
+    console.warn(this.props);
   }
 
   render() {

@@ -25,9 +25,9 @@ class SearchInput extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input className='m-1' type='text' name='text' value={this.state.text} onChange={this.handleChange} />
-        <select name='type' value={this.state.type} onChange={this.handleChange} >
+      <form className='d-flex flex-row' onSubmit={this.handleSubmit}>
+        <input className='search-input m-1 p-2' type='text' placeholder='search' name='text' value={this.state.text} onChange={this.handleChange} />
+        <select className='search-select' name='type' value={this.state.type} onChange={this.handleChange} >
           <option value='pins'>Pins</option>
           <option value='boards'>Boards</option>
         </select>
