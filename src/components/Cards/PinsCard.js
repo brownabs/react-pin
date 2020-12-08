@@ -7,7 +7,6 @@ import PinForm from '../Forms/PinForm';
 export default class PinCard extends Component {
   state = {
     detailsPage: this.props.detailsPage,
-    route: this.props.route,
     pin: {},
   }
 
@@ -15,11 +14,14 @@ export default class PinCard extends Component {
     this.setState({
       pin: this.props.pin,
     });
-    console.warn(this.props);
+  }
+
+  goBack = () => {
+    this.props.history.goBack();
   }
 
   render() {
-    const { pin, detailsPage, route } = this.state;
+    const { pin, detailsPage } = this.state;
     return (
     <div className='card m-2 h-50 w-25'>
       <img className='card-img-top' src={pin.imgUrl} alt='Card cap' />
@@ -28,8 +30,8 @@ export default class PinCard extends Component {
         <p className='card-text'>
           {pin.description}
         </p>
-        { detailsPage ? <div> <Link className='btn btn-dark' to={`/${route}`}>
-          Back </Link></div>
+        { detailsPage ? <div> <Button className='btn btn-dark' onClick={() => this.goBack()}>
+          Back </Button></div>
           : <div> <Link className='btn btn-primary' to={`/pin-details/${pin.firebaseKey}`}>
         <i className="fas fa-eye"></i>
         </Link>

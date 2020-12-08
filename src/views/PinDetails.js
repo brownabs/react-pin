@@ -12,6 +12,7 @@ export default class PinDetails extends React.Component {
   componentDidMount() {
     const firebaseKey = this.props.match.params.id;
     this.getSelectedPin(firebaseKey);
+    console.warn(this.props.history.location.pathname);
   }
 
   getSelectedPin = (pinId) => {
@@ -35,7 +36,7 @@ export default class PinDetails extends React.Component {
   render() {
     const { pin, loading } = this.state;
     const showPin = () => (
-    <PinsCard key={pin.firebaseKey} pin={pin} onUpdate={this.getSelectedPin} detailsPage={'yes'} route={'pins'}/>
+    <PinsCard key={pin.firebaseKey} pin={pin} onUpdate={this.getSelectedPin} detailsPage={'yes'} {...this.props}/>
     );
     return (
       <>
