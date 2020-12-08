@@ -52,13 +52,12 @@ export default class PinForm extends Component {
           return pinBoardInfo;
         }).then((pinBoardInfo) => CreatePinBoard(pinBoardInfo))
         .then((r) => {
-          console.warn(r);
-          this.props.onUpdate(this.state.boardId);
+          this.props.onUpdate();
         });
     } else {
       UpdatePin(this.state)
         .then((response) => {
-          this.props.onUpdate(response.data.boardId);
+          this.props.onUpdate(this.state.boardId);
         });
     }
   }

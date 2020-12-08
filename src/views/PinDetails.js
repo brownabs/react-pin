@@ -1,10 +1,12 @@
 import React from 'react';
-import { getSinglePin } from '../helpers/data/pinData';
 import PinsCard from '../components/Cards/PinsCard';
+import Loader from '../components/Loader';
+import { getSinglePin } from '../helpers/data/pinData';
 
 export default class PinDetails extends React.Component {
   state = {
     pin: {},
+    loading: true,
   }
 
   componentDidMount() {
@@ -16,7 +18,7 @@ export default class PinDetails extends React.Component {
     getSinglePin(pinId).then((response) => {
       this.setState({
         pin: response,
-      });
+      }, this.setLoading());
     });
   }
 
@@ -31,15 +33,19 @@ export default class PinDetails extends React.Component {
   }
 
   render() {
-    const { pin } = this.state;
+    const { pin, loading } = this.state;
     const showPin = () => (
-    <PinsCard key={pin.firebaseKey} pin={pin} onUpdate={this.getSelectedPin}/>
+    <PinsCard key={pin.firebaseKey} pin={pin} onUpdate={this.getSelectedPin} detailsPage={'yes'} route={'pins'}/>
     );
     return (
       <>
-      <div className="d-flex flex-column justify-content-center">
-      <div className='d-flex flex-wrap container'>{showPin()}</div>
-      </div>
+        { loading ? (
+          <Loader />
+        ) : (
+          <>
+          <div className='d-flex flex-wrap justify-content-center container-fluid'>{showPin()}</div>
+          </>
+        )}
       </>
     );
   }

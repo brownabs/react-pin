@@ -1,10 +1,12 @@
 import React from 'react';
-import { getAllUserPins } from '../helpers/data/pinData';
 import PinsCard from '../components/Cards/PinsCard';
 import Loader from '../components/Loader';
 import getUid from '../helpers/data/authData';
 import PinForm from '../components/Forms/PinForm';
 import AppModal from '../components/AppModal';
+import {
+  getAllUserPins, DeletePin,
+} from '../helpers/data/pinData';
 
 export default class Pins extends React.Component {
   state = {
@@ -25,6 +27,13 @@ export default class Pins extends React.Component {
     });
   }
 
+  removePin = (firebaseKey) => {
+    DeletePin(firebaseKey)
+      .then(() => {
+        this.getPins();
+      });
+  }
+
   setLoading = () => {
     this.timer = setInterval(() => {
       this.setState({ loading: false });
@@ -38,7 +47,7 @@ export default class Pins extends React.Component {
   render() {
     const { pins, loading } = this.state;
     const showPins = () => (
-      pins.map((pin) => <PinsCard key={pin.firebaseKey} pin={pin} className={'viewDetails'} />)
+      pins.map((pin) => <PinsCard key={pin.firebaseKey} pin={pin} className={'viewDetails'} removePin={this.removePin}/>)
     );
     return (
       <>

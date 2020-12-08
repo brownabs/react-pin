@@ -1,5 +1,6 @@
 import React from 'react';
-import { getAllUserBoards } from '../helpers/data/boardData';
+import { getAllUserBoards, DeleteBoard, DeleteBoardPin } from '../helpers/data/boardData';
+import { getBoardPins } from '../helpers/data/pinData';
 import BoardsCard from '../components/Cards/BoardsCard';
 import Loader from '../components/Loader';
 import getUid from '../helpers/data/authData';
@@ -31,6 +32,22 @@ export default class Boards extends React.Component {
     }, 1000);
   }
 
+  removeBoard = (e) => {
+    const firebaseKey = e.target.id;
+    DeleteBoard(firebaseKey);
+    getBoardPins(firebaseKey).then((response) => {
+      response.forEach((item) => {
+        const newArray = Object.values(item);
+        if (newArray.includes(firebaseKey)) {
+          DeleteBoardPin(item.firebaseKey)
+            .then(() => {
+              this.getBoards();
+            });
+        }
+      });
+    });
+  }
+
   componentWillUnmount() {
     clearInterval(this.timer);
   }
@@ -38,7 +55,7 @@ export default class Boards extends React.Component {
   render() {
     const { boards, loading } = this.state;
     const showBoards = () => (
-      boards.map((board) => <BoardsCard key={board.firebaseKey} board={board} />)
+      boards.map((board) => <BoardsCard key={board.firebaseKey} board={board} removeBoard={this.removeBoard}/>)
     );
     return (
       <>
