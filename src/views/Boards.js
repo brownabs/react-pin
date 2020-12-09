@@ -69,7 +69,7 @@ export default class Boards extends React.Component {
           <Loader />
         ) : (
           <>
-          <div className='boards d-flex flex-wrap container-fluid'>{showBoards()}</div>
+          {boards.length ? <div className='boards d-flex flex-wrap container-fluid'> {showBoards()} </div> : <div className='d-flex justify-content-center m-3'><h1>You currently have no boards, create one!</h1></div>}
           </>
         )}
       </>

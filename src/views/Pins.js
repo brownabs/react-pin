@@ -58,7 +58,7 @@ export default class Pins extends React.Component {
           <Loader />
         ) : (
           <>
-          <div className='d-flex justify-content-center flex-wrap container-fluid'>{showPins()}</div>
+         {pins.length ? <div className='d-flex justify-content-center flex-wrap container-fluid'>{showPins()}</div> : <div className='d-flex justify-content-center m-3'><h1>You currently have no pins, create one!</h1></div> }
           </>
         )}
       </>
