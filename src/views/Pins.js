@@ -1,67 +1,79 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PinsCard from '../components/Cards/PinsCard';
 import Loader from '../components/Loader';
 import getUid from '../helpers/data/authData';
 import PinForm from '../components/Forms/PinForm';
 import AppModal from '../components/AppModal';
 import {
-  getAllUserPins, DeletePin,
+  getAllUserPins, DeletePin, CreatePinData, UpdatePinData, CreatePinBoard,
 } from '../helpers/data/pinData';
 
-export default class Pins extends React.Component {
-  state = {
-    pins: [],
-    loading: true,
-  }
+export default function Pins() {
+  const [pins, setPins] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  componentDidMount() {
-    this.getPins();
-  }
-
-  getPins = () => {
+  useEffect(() => {
     const currentUserId = getUid();
     getAllUserPins(currentUserId).then((response) => {
-      this.setState({
-        pins: response,
-      }, this.setLoading);
+      setPins(response);
+      isLoading();
     });
-  }
+  }, [pins]);
 
-  removePin = (firebaseKey) => {
+  const getPins = (r) => {
+    const currentUserId = getUid();
+    getAllUserPins(currentUserId).then((response) => {
+      setPins(response);
+      isLoading();
+    });
+  };
+
+  const isLoading = () => {
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+  const removePin = (firebaseKey) => {
     DeletePin(firebaseKey)
       .then(() => {
-        this.getPins();
+        getPins();
       });
-  }
+  };
 
-  setLoading = () => {
-    this.timer = setInterval(() => {
-      this.setState({ loading: false });
-    }, 1000);
-  }
+  const CreatePin = (pinObj) => {
+    CreatePinData(pinObj)
+      .then((resp) => {
+        const pinBoardInfo = {
+          pinId: resp.data.firebaseKey,
+          boardId: this.state.boardId,
+          userId: this.state.userId,
+        };
+        return pinBoardInfo;
+      }).then((pinBoardInfo) => CreatePinBoard(pinBoardInfo))
+      .then(() => getPins());
+  };
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
+  const UpdatePin = (pinObj) => {
+    UpdatePinData(pinObj)
+      .then(() => getPins());
+  };
 
-  render() {
-    const { pins, loading } = this.state;
-    const showPins = () => (
-      pins.map((pin) => <PinsCard key={pin.firebaseKey} pin={pin} className={'viewDetails'} removePin={this.removePin}/>)
-    );
-    return (
+  const showPins = () => (
+    pins.length && pins.map((pin) => <PinsCard key={pin.firebaseKey} pin={pin} className={'viewDetails'} removePin={removePin} UpdatePin={UpdatePin} CreatePin={CreatePin}/>)
+  );
+  return (
       <>
       <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
-      <PinForm onUpdate={this.getPins}/>
+      <PinForm UpdatePin={UpdatePin} CreatePin={CreatePin}/>
         </AppModal>
         { loading ? (
           <Loader />
         ) : (
           <>
-         {pins.length ? <div className='d-flex justify-content-center flex-wrap container-fluid'>{showPins()}</div> : <div className='d-flex justify-content-center m-3'><h1>You currently have no pins, create one!</h1></div> }
+        <div className='d-flex justify-content-center flex-wrap container-fluid'>{showPins()}</div>
           </>
         )}
       </>
-    );
-  }
+  );
 }

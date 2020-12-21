@@ -32,24 +32,21 @@ export default class Boards extends React.Component {
     }, 1000);
   }
 
-  removeBoard = (e) => {
-    const firebaseKey = e.target.id;
-    DeleteBoard(firebaseKey).then(() => {
-      getBoardPins(firebaseKey).then((response) => {
+  removeBoard = (fbKey) => {
+    const firebaseKey = fbKey;
+    console.warn(firebaseKey);
+    DeleteBoard(firebaseKey);
+    getBoardPins(firebaseKey).then((response) => {
+      if (response !== []) {
         response.forEach((item) => {
-          const newArray = Object.values(item);
-          if (newArray.includes(firebaseKey)) {
-            DeleteBoardPin(item.firebaseKey)
-              .then(() => {
-                this.getBoards();
-              });
-          }
+          DeleteBoardPin(item.firebaseKey).then(() => this.getBoards());
         });
-      }).then(() => {
+      } else {
+        console.warn('else');
         this.getBoards();
-      });
+      }
     });
-  }
+  };
 
   componentWillUnmount() {
     clearInterval(this.timer);

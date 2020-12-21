@@ -3,7 +3,6 @@ import firebase from 'firebase/app';
 import { Button } from 'reactstrap';
 import 'firebase/storage';
 import GetUser from '../../helpers/data/authData';
-import { CreatePin, UpdatePin, CreatePinBoard } from '../../helpers/data/pinData';
 
 export default class PinForm extends Component {
   state = {
@@ -13,7 +12,7 @@ export default class PinForm extends Component {
     imgUrl: this.props.pin?.imgUrl || '',
     userId: '',
     private: false,
-    boardId: this.props.board?.firebaseKey || this.props.board?.boardId,
+    boardId: this.props.board?.firebaseKey || this.props.board?.boardId || '',
   }
 
   componentDidMount() {
@@ -43,25 +42,9 @@ export default class PinForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.firebaseKey === '') {
-      CreatePin(this.state)
-        .then((resp) => {
-          const pinBoardInfo = {
-            pinId: resp.data.firebaseKey,
-            boardId: this.state.boardId,
-            userId: this.state.userId,
-          };
-          return pinBoardInfo;
-        }).then((pinBoardInfo) => CreatePinBoard(pinBoardInfo))
-        .then((r) => {
-          this.props.onUpdate();
-        });
-      this.props.toggle();
+      this.props.CreatePin(this.state);
     } else {
-      UpdatePin(this.state)
-        .then((response) => {
-          this.props.onUpdate(this.state.boardId);
-        });
-      this.props.toggle();
+      this.props.UpdatePin(this.state);
     }
   }
 
