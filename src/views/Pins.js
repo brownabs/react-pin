@@ -55,14 +55,6 @@ export default function Pins() {
 
   const CreatePin = (pinObj) => {
     CreatePinData(pinObj)
-      .then((resp) => {
-        const pinBoardInfo = {
-          pinId: resp.data.firebaseKey,
-          boardId: this.state.boardId,
-          userId: this.state.userId,
-        };
-        return pinBoardInfo;
-      }).then((pinBoardInfo) => CreatePinBoard(pinBoardInfo))
       .then(() => getUserPins());
   };
 

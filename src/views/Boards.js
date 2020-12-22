@@ -26,6 +26,7 @@ export default function Boards() {
     getAllBoards();
   }, [currentUserId]);
 
+  // comment out?
   useEffect(() => {
     console.warn(boards);
   }, [boards]);
@@ -53,14 +54,6 @@ export default function Boards() {
 
   const CreateBoard = (boardObj) => {
     CreateBoardData(boardObj)
-      .then((resp) => {
-        const pinBoardInfo = {
-          pinId: resp,
-          boardId: this.state.boardId,
-          userId: this.state.userId,
-        };
-        return pinBoardInfo;
-      }).then((pinBoardInfo) => CreatePinBoard(pinBoardInfo))
       .then(() => getAllBoards());
   };
 
