@@ -1,32 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import {
+  React, useState,
+  useEffect,
+} from 'react';
 import PinsCard from '../components/Cards/PinsCard';
 import Loader from '../components/Loader';
 import getUid from '../helpers/data/authData';
 import PinForm from '../components/Forms/PinForm';
 import AppModal from '../components/AppModal';
 import {
-  getAllUserPins, DeletePin, CreatePinData, UpdatePinData, CreatePinBoard,
+  getAllUserPins,
+  DeletePin,
+  CreatePinData,
+  UpdatePinData,
+  CreatePinBoard,
 } from '../helpers/data/pinData';
 
 export default function Pins() {
   const [pins, setPins] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
-    const currentUserId = getUid();
+    setCurrentUserId(getUid());
+  }, []);
+
+  useEffect(() => {
+    getUserPins();
+  }, [currentUserId]);
+
+  useEffect(() => {
+    console.warn(pins);
+  }, [pins]);
+
+  function getUserPins() {
+    setLoading(true);
     getAllUserPins(currentUserId).then((response) => {
+      console.warn('respnse', response);
       setPins(response);
       isLoading();
     });
-  }, [pins]);
-
-  const getPins = (r) => {
-    const currentUserId = getUid();
-    getAllUserPins(currentUserId).then((response) => {
-      isLoading();
-      return setPins(response);
-    });
-  };
+  }
 
   const isLoading = () => {
     setInterval(() => {
@@ -37,7 +50,7 @@ export default function Pins() {
   const removePin = (firebaseKey) => {
     DeletePin(firebaseKey)
       .then(() => {
-        getPins();
+        getUserPins();
       });
   };
 
@@ -51,15 +64,36 @@ export default function Pins() {
         };
         return pinBoardInfo;
       }).then((pinBoardInfo) => CreatePinBoard(pinBoardInfo))
-      .then(() => getPins());
+      .then(() => getUserPins());
   };
 
   const UpdatePin = (pinObj) => {
-    UpdatePinData(pinObj);
+    UpdatePinData(pinObj)
+      .then(() => {
+        getUserPins();
+      });
   };
 
   const showPins = () => (
-    pins.length && pins.map((pin) => <PinsCard key={pin.firebaseKey} pin={pin} className={'viewDetails'} removePin={removePin} UpdatePin={UpdatePin} CreatePin={CreatePin}/>)
+    pins.length && pins.map((pin) => < PinsCard key = {
+        pin.firebaseKey
+      }
+      pin = {
+        pin
+      }
+      className = {
+        'viewDetails'
+      }
+      removePin = {
+        removePin
+      }
+      UpdatePin = {
+        UpdatePin
+      }
+      CreatePin = {
+        CreatePin
+      }
+      />)
   );
   return (
       <>
