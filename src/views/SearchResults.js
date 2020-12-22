@@ -50,7 +50,6 @@ export default class SearchResults extends Component {
 
   render() {
     const { results, searchType } = this.state;
-    console.warn(results);
     const showResults = () => (
       results.length ? results.map((result) => (
         searchType === 'boards' ? <BoardsCard key={result.firebaseKey} board={result}/> : <PinsCard key={result.firebaseKey} pin={result}/>
@@ -58,7 +57,7 @@ export default class SearchResults extends Component {
     );
     return (
       <div>
-        <h1>Search Results</h1>
+        <h1>Search Results:</h1>
         {showResults()}
       </div>
     );

@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import AppModal from '../AppModal';
 import BoardForm from '../Forms/BoardForm';
 
-export default function BoardsCard({ board, removeBoard, onUpdate }) {
-  return (
-    <div className='card m-2 h-50 w-25'>
+export default class BoardsCard extends Component {
+  state = {
+    board: {},
+  }
+
+  componentDidMount() {
+    this.setState({
+      board: this.props.board,
+    });
+  }
+
+  render() {
+    const { board } = this.state;
+    return (
+    <div className='card m-1 h-25 w-25'>
       <img className='card-img-top' src={board.imgUrl} alt='Card cap' />
       <div className='card-body'>
         <h5 className='card-title'>{board.name}</h5>
@@ -17,10 +29,13 @@ export default function BoardsCard({ board, removeBoard, onUpdate }) {
           View Pins
         </Link>
         <AppModal title={'Edit Board'} buttonLabel={'Edit Board'}>
-      <BoardForm board={board} onUpdate={onUpdate}/>
+      <BoardForm board={board} onUpdate={this.props.onUpdate} />
         </AppModal>
-        <Button id={board.firebaseKey} onClick={(e) => removeBoard(e)}><i className="fas fa-trash"></i></Button>
-      </div>
-    </div>
-  );
+        <AppModal title={'Are you sure you want to delete this board?'} buttonLabel={'Delete Board'} >
+          <Button onClick={() => this.props.removeBoard(board.firebaseKey)}>Yes</Button>
+        </AppModal>
+        </div>
+        </div>
+    );
+  }
 }

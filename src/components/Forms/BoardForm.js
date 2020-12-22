@@ -45,13 +45,11 @@ export default class BoardForm extends Component {
         .then(() => {
           this.props.onUpdate();
         });
-      this.props.toggle();
     } else {
       UpdateBoard(this.state)
         .then(() => {
-          this.props.onUpdate(this.state.firebaseKey);
+          this.props.onUpdate();
         });
-      this.props.toggle();
     }
   }
 
@@ -93,7 +91,7 @@ export default class BoardForm extends Component {
       onChange={this.handleChange}
       accept='image/*'
       ></input>
-      <Button onClick={this.handleSubmit}>Save</Button>
+      <Button>Submit</Button>
       </form>
     );
   }
