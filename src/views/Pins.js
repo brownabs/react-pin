@@ -35,7 +35,6 @@ export default function Pins() {
   function getUserPins() {
     setLoading(true);
     getAllUserPins(currentUserId).then((response) => {
-      console.warn('respnse', response);
       setPins(response);
       isLoading();
     });
