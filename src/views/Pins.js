@@ -23,8 +23,8 @@ export default function Pins() {
   const getPins = (r) => {
     const currentUserId = getUid();
     getAllUserPins(currentUserId).then((response) => {
-      setPins(response);
       isLoading();
+      return setPins(response);
     });
   };
 
@@ -55,8 +55,7 @@ export default function Pins() {
   };
 
   const UpdatePin = (pinObj) => {
-    UpdatePinData(pinObj)
-      .then(() => getPins());
+    UpdatePinData(pinObj);
   };
 
   const showPins = () => (
