@@ -29,7 +29,7 @@ export default class BoardsCard extends Component {
           View Pins
         </Link>
         <AppModal title={'Edit Board'} buttonLabel={'Edit Board'}>
-      <BoardForm board={board} onUpdate={this.props.onUpdate} />
+      <BoardForm board={board} UpdateBoard={this.props.UpdateBoard} CreateBoard={this.props.CreateBoard}/>
         </AppModal>
         <AppModal title={'Are you sure you want to delete this board?'} buttonLabel={'Delete Board'} >
           <Button onClick={() => this.props.removeBoard(board.firebaseKey)}>Yes</Button>

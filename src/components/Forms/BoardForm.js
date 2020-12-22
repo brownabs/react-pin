@@ -3,7 +3,6 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 import { Button } from 'reactstrap';
 import GetUser from '../../helpers/data/authData';
-import { CreateBoard, UpdateBoard } from '../../helpers/data/boardData';
 
 export default class BoardForm extends Component {
   state = {
@@ -41,15 +40,9 @@ export default class BoardForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.firebaseKey === '') {
-      CreateBoard(this.state)
-        .then(() => {
-          this.props.onUpdate();
-        });
+      this.props.CreateBoard(this.state);
     } else {
-      UpdateBoard(this.state)
-        .then(() => {
-          this.props.onUpdate();
-        });
+      this.props.UpdateBoard(this.state);
     }
   }
 
