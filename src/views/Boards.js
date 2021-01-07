@@ -65,7 +65,7 @@ export default function Boards() {
   };
 
   const showBoards = () => (
-    boards.length && boards.map((board) => < BoardsCard key = {
+    boards.length ? boards.map((board) => < BoardsCard key = {
         board.firebaseKey
       }
       board = {
@@ -84,7 +84,8 @@ export default function Boards() {
         CreateBoard
       }
       />)
-  );
+      : <div><Loader></Loader></div>);
+
   return (
       <>
       <AppModal title={'Create Board'} buttonLabel={'Create Board'}>
