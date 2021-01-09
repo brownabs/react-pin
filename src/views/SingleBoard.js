@@ -81,7 +81,7 @@ export default class SingleBoard extends React.Component {
     const { pins, board } = this.state;
     const renderPins = () => (
       pins.map((pin) => (
-        <PinsCard key={pin.firebaseKey} pin={pin} removePin={this.removePin} {...this.props}/>
+      <PinsCard key={pin.firebaseKey} currentPin={pin} removePin={this.removePin} {...this.props} showBoards={false}/>
       ))
     );
     return (

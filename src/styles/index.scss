@@ -35,10 +35,77 @@ body {
   color: black !important
 }
 
-.boards {
-  width: 100% !important
-}
-
 .body-of-app {
   padding-top: 70px !important;
 }
+
+#board-container, #pin-container {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 1
+}
+
+.boards-card .edit-button {
+  display: none
+ }
+
+ .boards-card .delete-button {
+  display: none
+ }
+
+ .boards-card .card-body {
+  display: none
+ }
+
+ .pins-card .card-body {
+  display: none
+ }
+
+ .card:hover .card-body {
+  color: black;
+   display: block;
+   cursor: pointer;
+  }
+
+.card:hover .edit-button {
+color: black;
+opacity:  40%;
+ display: block;
+ position: absolute;
+ font-size: 2em;
+ top: 0;
+ left: 0;
+ margin-top: .5em;
+ margin-left: .7em
+}
+
+.card:hover .delete-button {
+  color: black;
+  opacity:  40%;
+  display: block;
+  position: absolute;
+  font-size: 2em;
+  top: 0;
+  right: 0;
+  margin-top: .5em;
+  margin-right: .7em
+ }
+
+ .card:hover .card-title {
+  color: black;
+  opacity:  60%;
+  display: block;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: auto;
+ }
+
+ .card:hover .card-img-top {
+  opacity:  30%;
+ }
+
+ .card, .card-body, .card-img-top {
+   border-radius: 30px;
+ }
