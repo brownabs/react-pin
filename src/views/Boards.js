@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Masonry from 'react-masonry-css';
 import {
   getAllUserBoards,
   DeleteBoard,
@@ -84,18 +85,22 @@ export default function Boards() {
         CreateBoard
       }
       />)
-      : <div><Loader></Loader></div>);
+      : <div><h1>There are currently no boards to display</h1></div>);
 
   return (
       <>
-      <AppModal title={'Create Board'} buttonLabel={'Create Board'}>
+      <AppModal title={'Create Board'} buttonLabel={'Create Board'} buttonAppear={true}>
       <BoardForm UpdateBoard={UpdateBoard} CreateBoard={CreateBoard}/>
         </AppModal>
         { loading ? (
-          <Loader />
+           <div className='d-flex justify-content-center'><Loader /></div>
         ) : (
           <>
-        <div className='d-flex justify-content-center flex-wrap container-fluid'>{showBoards()}</div>
+  <div className='container-fluid' id='board-container'>
+  <div className='card-columns'>
+    {showBoards()}
+    </div>
+    </div>
           </>
         )}
       </>
