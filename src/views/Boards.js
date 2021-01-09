@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Masonry from 'react-masonry-css';
 import {
   getAllUserBoards,
   DeleteBoard,
-  DeleteBoardPin,
   CreateBoardData,
   UpdateBoardData,
 } from '../helpers/data/boardData';
-import { getBoardPins, CreatePinBoard } from '../helpers/data/pinData';
 import BoardsCard from '../components/Cards/BoardsCard';
 import Loader from '../components/Loader';
 import getUid from '../helpers/data/authData';

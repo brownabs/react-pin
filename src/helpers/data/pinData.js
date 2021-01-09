@@ -22,9 +22,10 @@ const getBoardPins = (boardId) => new Promise((resolve, reject) => {
 });
 
 const CreatePinBoard = (pinObj) => new Promise((resolve, reject) => {
+  console.warn(pinObj);
   const pinBoard = {
     boardId: pinObj.boardId,
-    pinId: pinObj.pinId,
+    pinId: pinObj.firebaseKey,
     userId: pinObj.userId,
   };
   axios.post(`${baseUrl}/pins-boards.json`, pinBoard)
@@ -50,7 +51,7 @@ const CreatePinData = (object) => new Promise((resolve, reject) => {
 
 const UpdatePinData = (pinObj) => new Promise((resolve, reject) => {
   axios.patch(`${baseUrl}/pins/${pinObj.firebaseKey}.json`, pinObj)
-    .then((r) => resolve(r))
+    .then((r) => resolve(r.data))
     .catch((error) => reject(error));
 });
 

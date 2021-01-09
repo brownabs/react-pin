@@ -13,10 +13,15 @@ import {
   CreatePinData,
   UpdatePinData,
   CreatePinBoard,
+  getBoardPins,
 } from '../helpers/data/pinData';
+import {
+  getAllUserBoards,
+} from '../helpers/data/boardData';
 
 export default function Pins() {
   const [pins, setPins] = useState([]);
+  const [boards, setBoards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState(null);
 
@@ -32,10 +37,22 @@ export default function Pins() {
     console.warn(pins);
   }, [pins]);
 
+  useEffect(() => {
+    getUserBoards();
+  }, [currentUserId]);
+
   function getUserPins() {
     setLoading(true);
     getAllUserPins(currentUserId).then((response) => {
       setPins(response);
+      isLoading();
+    });
+  }
+
+  function getUserBoards() {
+    setLoading(true);
+    getAllUserBoards(currentUserId).then((response) => {
+      setBoards(response);
       isLoading();
     });
   }
@@ -69,7 +86,7 @@ export default function Pins() {
     pins.length && pins.map((pin) => < PinsCard key = {
         pin.firebaseKey
       }
-      pin = {
+      currentPin = {
         pin
       }
       className = {
@@ -84,6 +101,12 @@ export default function Pins() {
       CreatePin = {
         CreatePin
       }
+      boards = {
+        boards
+      }
+      showBoards = {
+        true
+      }
       />)
   );
   return (
@@ -95,7 +118,11 @@ export default function Pins() {
           <Loader />
         ) : (
           <>
-        <div className='d-flex justify-content-center flex-wrap container-fluid'>{showPins()}</div>
+        <div className='container-fluid' id='pin-container'>
+          <div className='card-columns'>
+           {showPins()}
+          </div>
+         </div>
           </>
         )}
       </>
