@@ -22,6 +22,7 @@ export default function Boards() {
 
   useEffect(() => {
     getAllBoards();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUserId]);
 
   // comment out?

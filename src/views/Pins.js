@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   React, useState,
   useEffect,
@@ -12,8 +13,6 @@ import {
   DeletePin,
   CreatePinData,
   UpdatePinData,
-  CreatePinBoard,
-  getBoardPins,
 } from '../helpers/data/pinData';
 import {
   getAllUserBoards,
