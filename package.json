@@ -2,6 +2,7 @@
   "name": "react-setup",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@testing-library/jest-dom": "^5.11.5",
@@ -9,7 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
-    "firebase": "^8.0.2",
+    "firebase": "^8.2.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
