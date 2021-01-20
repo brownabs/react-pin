@@ -73,15 +73,12 @@ body {
  }
 
  .card:hover .card-body {
-  color: black;
    display: block;
    cursor: pointer;
   }
 
 .card:hover .edit-button {
-color: black;
-opacity:  40%;
- display: block;
+opacity: 40% !important;
  position: absolute;
  font-size: 2em;
  top: 0;
@@ -91,9 +88,7 @@ opacity:  40%;
 }
 
 .card:hover .delete-button {
-  color: black;
-  opacity:  40%;
-  display: block;
+  opacity: 40% !important;
   position: absolute;
   font-size: 2em;
   top: 0;
@@ -103,9 +98,7 @@ opacity:  40%;
  }
 
  .card:hover .card-title {
-  color: black;
   opacity:  60%;
-  display: block;
   position: relative;
   left: 0;
   right: 0;
