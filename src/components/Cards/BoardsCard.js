@@ -19,8 +19,8 @@ export default class BoardsCard extends Component {
     const { board } = this.state;
     return (
     <div className='card boards-card'>
-      <div>
       <img className='card-img-top' src={board.imgUrl} alt='Card cap' />
+      <div className='card-child'>
       <div className='card-body'>
         <h5 className='card-title'>{board.name}</h5>
         <Link className='btn btn-dark' to={`/boards/${board.firebaseKey}`}>

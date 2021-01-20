@@ -45,21 +45,25 @@ body {
   margin: 1
 }
 
-.boards-card .edit-button {
-  display: none
- }
+// .boards-card .edit-button {
+//   display: none
+//  }
 
- .boards-card .delete-button {
-  display: none
- }
+//  .boards-card .delete-button {
+//   display: none
+//  }
 
- .boards-card .card-body {
-  display: none
- }
+//  .boards-card .card-body {
+//   display: none
+//  }
 
- .pins-card .card-body {
+//  .pins-card .card-body {
+//   display: none
+//  }
+
+.card-body {
   display: none
- }
+}
  .card, .card-body, .card-img-top {
    border-radius: 30px;
  }
@@ -67,7 +71,7 @@ body {
  .card:hover .card-img-top {
   opacity:  30%;
  }
- 
+
  .card:hover .card-body {
   color: black;
    display: block;
