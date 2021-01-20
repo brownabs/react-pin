@@ -1,0 +1,15 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+      "pins-boards": {
+      ".indexOn": ["boardId"]
+  },
+      "boards": {
+      ".indexOn": ["userId"]
+    },
+      "pins": {
+      ".indexOn": ["userId"]
+  }
+}
+}
