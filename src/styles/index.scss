@@ -60,10 +60,14 @@ body {
  .pins-card .card-body {
   display: none
  }
-
- .card:hover > div:hover {
-  opacity:  40%;
+ .card, .card-body, .card-img-top {
+   border-radius: 30px;
  }
+
+ .card:hover .card-img-top {
+  opacity:  30%;
+ }
+ 
  .card:hover .card-body {
   color: black;
    display: block;
@@ -103,12 +107,4 @@ opacity:  40%;
   right: 0;
   top: 0;
   margin: auto;
- }
-
- .card:hover .card-img-top {
-  opacity:  30%;
- }
-
- .card, .card-body, .card-img-top {
-   border-radius: 30px;
  }

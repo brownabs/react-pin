@@ -42,6 +42,7 @@ export default function PinsCard({
 
   return (
     <div className='card pins-card'>
+      <div className='card-hover hover-shadow'>
       <img className='card-img-top' src={pin.imgUrl} alt='Card cap' />
       <div className='card-body'>
         <h5 className='card-title'>{pin.name}: {pin.description}</h5>
@@ -68,6 +69,7 @@ export default function PinsCard({
     </ButtonDropdown> : <div></div>}
         </div>}
         </div>
+      </div>
       </div>
   );
 }
