@@ -45,22 +45,6 @@ body {
   margin: 1
 }
 
-// .boards-card .edit-button {
-//   display: none
-//  }
-
-//  .boards-card .delete-button {
-//   display: none
-//  }
-
-//  .boards-card .card-body {
-//   display: none
-//  }
-
-//  .pins-card .card-body {
-//   display: none
-//  }
-
 .card-body {
   display: none
 }
@@ -98,7 +82,7 @@ opacity: 0.5 !important;
  }
 
  .card:hover .card-title {
-  opacity:  60%;
+  opacity:  0.5 !important;
   position: relative;
   left: 0;
   right: 0;

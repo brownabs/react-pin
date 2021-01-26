@@ -18,7 +18,8 @@ import {
   getAllUserBoards,
 } from '../helpers/data/boardData';
 
-export default function Pins() {
+export default function Pins({ searchedPins }) {
+  const [pinsSearched] = useState(searchedPins);
   const [pins, setPins] = useState([]);
   const [boards, setBoards] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,12 +41,20 @@ export default function Pins() {
     getUserBoards();
   }, [currentUserId]);
 
+  useEffect(() => {
+    setCurrentUserId(getUid());
+  }, []);
+
   function getUserPins() {
     setLoading(true);
-    getAllUserPins(currentUserId).then((response) => {
-      setPins(response);
-      isLoading();
-    });
+    if (pinsSearched === undefined) {
+      getAllUserPins(currentUserId).then((response) => {
+        setPins(response);
+        isLoading();
+      });
+    } else {
+      setPins([pinsSearched]);
+    }
   }
 
   function getUserBoards() {
@@ -108,6 +117,7 @@ export default function Pins() {
       }
       />)
   );
+
   return (
       <>
       <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>

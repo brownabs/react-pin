@@ -64,7 +64,7 @@ export default function Routes({ user }) {
         />
         <PrivateRoute
           exact
-          path='/search/:term/:type'
+          path='/search/:type/:text'
           component={SearchResults}
           user={user}
         />
