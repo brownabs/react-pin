@@ -25,7 +25,7 @@ const CreatePinBoard = (pinObj) => new Promise((resolve, reject) => {
   console.warn(pinObj);
   const pinBoard = {
     boardId: pinObj.boardId,
-    pinId: pinObj.firebaseKey,
+    pinId: pinObj.pinId,
     userId: pinObj.userId,
   };
   axios.post(`${baseUrl}/pins-boards.json`, pinBoard)

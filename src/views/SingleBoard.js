@@ -1,8 +1,12 @@
 import React from 'react';
 import {
-  getBoardPins, getPin, DeletePin, DeleteBoardPin,
+  CreatePinData, getBoardPins, getPin, DeletePin, DeleteBoardPin,
 } from '../helpers/data/pinData';
-import { getSingleBoard } from '../helpers/data/boardData';
+import {
+  getSingleBoard,
+  CreateBoardData,
+  UpdateBoardData,
+} from '../helpers/data/boardData';
 import PinsCard from '../components/Cards/PinsCard';
 import BoardForm from '../components/Forms/BoardForm';
 import PinForm from '../components/Forms/PinForm';
@@ -20,18 +24,13 @@ export default class SingleBoard extends React.Component {
   }
 
   loadData = () => {
-    // 1. Pull boardId from URL params
     const boardId = this.props.match.params.id;
-    // 2. Make a call to the API that gets the board info
     getSingleBoard(boardId).then((response) => {
       this.setState({
         board: response,
       });
     });
-
-    // 3. Make a call to the API that returns the pins associated with this board and set to state.
     this.getPins(boardId)
-      // because we did a promise.all, the response will not resolve until all the promises are completed
       .then((resp) => (
         this.setState({
           pins: resp,
@@ -77,11 +76,29 @@ export default class SingleBoard extends React.Component {
     });
   }
 
+   CreateBoard = (boardObj) => {
+     CreateBoardData(boardObj)
+       .then(() => this.loadData());
+   };
+
+   UpdateBoard = (boardObj) => {
+     UpdateBoardData(boardObj)
+       .then(() => {
+         this.loadData();
+       });
+   };
+
+  CreatePin = (pinObj) => {
+    CreatePinData(pinObj)
+      .then(() => this.loadData());
+  };
+
   render() {
     const { pins, board } = this.state;
+    console.warn(pins);
     const renderPins = () => (
       pins.map((pin) => (
-      <PinsCard key={pin.firebaseKey} currentPin={pin} removePin={this.removePin} {...this.props} showBoards={false}/>
+      <PinsCard key={pin.firebaseKey} currentPin={pin} onUpdate={this.loadData} removePin={this.removePin} showBoards={false}/>
       ))
     );
     return (
@@ -89,7 +106,7 @@ export default class SingleBoard extends React.Component {
         <h1 className='m-3'> <img className='boardImg mr-2' src={board.imgUrl} alt='Card cap' />{board.name} </h1>
         <div className='d-flex flex-row justify-content-center'>
     {!this.state.hideModal ? <AppModal title={'Update Board'} buttonLabel={'Update Board'}>
-    { Object.keys(board).length && <BoardForm board={board} onUpdate={this.loadData} {...this.props} /> }
+    { Object.keys(board).length && <BoardForm board={board} UpdateBoard={this.UpdateBoard} CreateBoard={this.CreateBoard}/> }
     </AppModal> : ''}
         <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
           {<PinForm board={board} onUpdate={this.loadData}/>}

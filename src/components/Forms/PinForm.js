@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import { Button } from 'reactstrap';
 import 'firebase/storage';
+import { CreatePinData, UpdatePinData, CreatePinBoard } from '../../helpers/data/pinData';
 import GetUser from '../../helpers/data/authData';
 
 export default class PinForm extends Component {
@@ -16,6 +17,7 @@ export default class PinForm extends Component {
   }
 
   componentDidMount() {
+    console.warn(this.props);
     const userId = GetUser();
     this.setState({
       userId,
@@ -40,11 +42,23 @@ export default class PinForm extends Component {
   }
 
   handleSubmit = (e) => {
+    console.warn('click event came from singleboard', this.props.board);
     e.preventDefault();
     if (this.state.firebaseKey === '') {
-      this.props.CreatePin(this.state);
+      CreatePinData(this.state)
+        .then((response) => {
+          const pinToBoardObject = {
+            boardId: this.props.board.firebaseKey,
+            pinId: response.data.firebaseKey,
+            userId: this.state.userId,
+          };
+          this.props.board ? CreatePinBoard(pinToBoardObject).then(() => this.props.onUpdate(this.props.board.firebaseKey)) : this.props.onUpdate();
+        });
     } else {
-      this.props.UpdatePin(this.state);
+      UpdatePinData(this.state)
+        .then(() => {
+          this.props.board ? this.props.onUpdate(this.props.board.firebaseKey) : this.props.onUpdate(this.state.boardId);
+        });
     }
   }
 
