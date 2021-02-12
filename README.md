@@ -1,8 +1,8 @@
 # Mock Pinterest
 > Mock Pinterest is a front-end application built with React.js that replicates the popular Pinterest application. All data is user-generated and stored in a firebase database.
->Main functionality: Users are able to create boards and pins and associate pins with selected boards. User can also use the searchbar to find specific boards and pins. 
+1. Main functionality: Users are able to create boards and pins and associate pins with selected boards. User can also use the searchbar to find specific boards and pins. 
 
-### Deployed Site 
+## Deployed Site 
 https://react-pinterest-322f4.web.app/
 
 ## Deploying Your Own Firebase/React app
