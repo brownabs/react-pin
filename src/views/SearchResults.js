@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BoardsCard from '../components/Cards/BoardsCard';
-import PinsCard from '../components/Cards/PinsCard';
+import Pins from './Pins';
 import { getAllUserBoards } from '../helpers/data/boardData';
 import { getAllUserPins } from '../helpers/data/pinData';
 import getUid from '../helpers/data/authData';
@@ -17,7 +17,7 @@ export default class SearchResults extends Component {
   }
 
   performSearch = () => {
-    const searchTerm = this.props.match.params.term.toLowerCase();
+    const searchTerm = this.props.match.params.text.toLowerCase();
     const searchType = this.props.match.params.type;
     const currentUser = getUid();
 
@@ -43,7 +43,7 @@ export default class SearchResults extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchTerm !== this.props.match.params.term) {
+    if (prevState.searchTerm !== this.props.match.params.text) {
       this.performSearch();
     }
   }
@@ -51,15 +51,17 @@ export default class SearchResults extends Component {
   render() {
     const { results, searchType } = this.state;
     const showResults = () => (
-      results.length ? results.map((result) => (
-        searchType === 'boards' ? <BoardsCard key={result.firebaseKey} board={result}/> : <PinsCard key={result.firebaseKey} pin={result}/>
-      )) : <h1>There are no {searchType} to view</h1>
+      results.map((result) => (
+        searchType === 'boards' ? <BoardsCard key={result.firebaseKey} board={result}/> : <Pins searchedPins={result}/>
+      ))
     );
     return (
-      <div>
-        <h1>Search Results:</h1>
-        {showResults()}
+       <>
+       <div>
+       <h1>Search Results:</h1>
+        { results.length ? showResults() : <h1>There are no {searchType} to view</h1>}
       </div>
+      </>
     );
   }
 }

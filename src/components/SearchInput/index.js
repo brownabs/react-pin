@@ -9,10 +9,10 @@ class SearchInput extends Component {
 
   handleSubmit= (e) => {
     e.preventDefault();
-    this.props.history.push(`/search/${this.state.text}/${this.state.type}`);
+    this.props.history.push(`/search/${this.state.type}/${this.state.text}`);
 
     this.setState({
-      type: 'pins',
+      type: '',
       text: '',
     });
   }
