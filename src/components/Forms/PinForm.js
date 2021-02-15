@@ -42,22 +42,21 @@ export default class PinForm extends Component {
   }
 
   handleSubmit = (e) => {
-    console.warn('click event came from singleboard', this.props.board);
     e.preventDefault();
     if (this.state.firebaseKey === '') {
       CreatePinData(this.state)
         .then((response) => {
           const pinToBoardObject = {
-            boardId: this.props.board.firebaseKey,
+            boardId: this.state.boardId,
             pinId: response.data.firebaseKey,
             userId: this.state.userId,
           };
-          this.props.board ? CreatePinBoard(pinToBoardObject).then(() => this.props.onUpdate(this.props.board.firebaseKey)) : this.props.onUpdate();
+          this.props.board ? CreatePinBoard(pinToBoardObject).then(() => this.props.onUpdate(this.props.board.firebaseKey)) : this.props.UpdatePin(this.state);
         });
     } else {
       UpdatePinData(this.state)
         .then(() => {
-          this.props.board ? this.props.onUpdate(this.props.board.firebaseKey) : this.props.onUpdate(this.state.boardId);
+          this.props.board ? this.props.onUpdate(this.props.board.firebaseKey) : this.props.UpdatePin(this.state);
         });
     }
   }

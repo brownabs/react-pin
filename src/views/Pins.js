@@ -121,7 +121,7 @@ export default function Pins({ searchedPins }) {
   return (
       <>
       <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
-      <PinForm UpdatePin={UpdatePin} CreatePin={CreatePin} onUpdate={getUserPins}/>
+      <PinForm UpdatePin={UpdatePin} CreatePin={CreatePin}/>
         </AppModal>
         { loading ? (
           <Loader />
