@@ -105,16 +105,18 @@ export default class SingleBoard extends React.Component {
       <div className='d-flex flex-column justify-content-center'>
         <h1 className='m-3'> <img className='boardImg mr-2' src={board.imgUrl} alt='Card cap' />{board.name} </h1>
         <div className='d-flex flex-row justify-content-center'>
-    {!this.state.hideModal ? <AppModal title={'Update Board'} buttonLabel={'Update Board'}>
+    {!this.state.hideModal ? <AppModal title={'Update Board'} buttonLabel={'Update Board'} buttonAppear={true}>
     { Object.keys(board).length && <BoardForm board={board} UpdateBoard={this.UpdateBoard} CreateBoard={this.CreateBoard}/> }
     </AppModal> : ''}
-        <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
+        <AppModal title={'Create Pin'} buttonLabel={'Create Pin'} buttonAppear={true}>
           {<PinForm board={board} onUpdate={this.loadData}/>}
         </AppModal>
         </div>
-        <div className='d-flex justify-content-center flex-wrap container'>
+        <div className='container-fluid' id='single-board-pin-container'>
+          <div className='card-columns'>
           {pins.length ? renderPins() : <h1>There are currently no pins for this board</h1> }
-        </div>
+          </div>
+      </div>
       </div>
     );
   }

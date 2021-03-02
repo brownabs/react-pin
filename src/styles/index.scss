@@ -42,7 +42,11 @@ body {
 #board-container, #pin-container {
   display: flex;
   flex-flow: row wrap;
-  margin: 1
+}
+
+#single-board-pins-container {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .card-body {
