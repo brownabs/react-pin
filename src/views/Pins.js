@@ -120,7 +120,7 @@ export default function Pins({ searchedPins }) {
 
   return (
       <>
-      <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
+      <AppModal title={'Create Pin'} buttonLabel={'Create Pin'} buttonAppear={true}>
       <PinForm UpdatePin={UpdatePin} CreatePin={CreatePin}/>
         </AppModal>
         { loading ? (

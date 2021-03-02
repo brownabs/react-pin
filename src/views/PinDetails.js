@@ -36,7 +36,7 @@ export default class PinDetails extends React.Component {
   render() {
     const { pin, loading } = this.state;
     const showPin = () => (
-    <PinsCard key={pin.firebaseKey} pin={pin} onUpdate={this.getSelectedPin} detailsPage={'yes'} {...this.props}/>
+    <PinsCard key={pin.firebaseKey} currentPin={pin} onUpdate={this.getSelectedPin} detailsPage={'yes'} {...this.props}/>
     );
     return (
       <>
